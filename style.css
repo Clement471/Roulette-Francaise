@@ -1,0 +1,73 @@
+body {
+  text-align: center;
+  padding: 40px;
+  background-color: black;
+  color: #39ff14;
+padding-top: 200px;
+  min-height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+align-items: center;
+font-family: 'Share Tech Mono', sans-serif;
+font-weight: 400
+}
+
+button {
+  background-color: #39ff14;
+  color: black;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid black;
+  font-family: 'Share Tech Mono', sans-serif;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+
+    #btnOptions {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+ 
+    #recommencer {
+    position: fixed;
+    top: 60px;
+    left: 10px;
+}
+ 
+#avestissement h1 {
+    font-size: 100px;
+    margin: 0;
+}
+
+#info {
+      position: fixed;
+    top: 10px;
+    right: 10px;
+}
+
+#message svg {
+    width: 80px !important;
+    height: 80px !important;
+    display: block;
+    margin: 10px auto;
+}
+#carte {
+    background-color: #111;
+    border: 2px solid #39ff14;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 20px;
+}
+#carteContenu svg {
+    width: 60px !important;
+    height: 60px !important;
+    margin-bottom: 10px;
+}

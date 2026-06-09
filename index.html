@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roulette Française</title>
+        <link href="style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/8103660552.js" crossorigin="anonymous"></script>
+</head>
+<body>
+        <button id="btnOptions" onclick="toggleMenu()">⚙ Options</button>
+
+        <div onclick="demarrer()" id="avestissement"><h1>⚠️</h1> Avertissement — Ce jeu est destiné à un public adulte . Il contient de l'humour noir et du second degré. Le contenu est purement fictif et humoristique, il ne reflète en aucuns cas les opinions de son créateur. En continuant vous confirmez etre majeur et acceptez ce contexte.</div>
+
+    <div id="setup" style="display:none">
+    <h1>Bienvenue à la Roulette Française</h1>
+    <p>Entrez le nombre de joueurs :</p>
+    <input type="number" id="nomJoueurs" min="2" max="6">
+       <button id="btnValider" onclick="valider ()">Valider</button>
+    <p>Entrez le nom des joueurs :</p>
+    <div id="inputs"></div>
+    <p id="erreur"></p>
+   <button id="startGame" onclick="startGame()" disabled>Démarrer le jeu</button>
+    </div>
+
+  
+
+<div id="jeu" style="display: none;">
+    <div id="info"></div>
+    <p id="message"></p>
+    <p id="erreurJeu"></p>
+    <div id="menu" style="display:none">
+        <button id="recommencer" onclick="recommencer()">Recommencer</button>
+    </div>
+    <div id="carte" style="display:none">
+        <div id="carteContenu"></div>
+    </div>
+    <button id="tirer" onclick="tirer()">Tirer</button>
+</div>
+
+<div id="fin" style="display:none">
+    <h1> Partie terminée !</h1>
+    <div id="stats"></div>
+    <button onclick="recommencer()">Recommencer</button>
+</div>
+     <script src="script.js"></script>
+</body>
+</html>
