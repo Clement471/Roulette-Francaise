@@ -93,6 +93,7 @@ for (let i = 0; i < nom; i++) {
 // ============================================================
 
 function tirer() {
+  document.getElementById("message").innerHTML = "";
   document.getElementById("carte").style.display = "none";
   nombreTentatives++;
   let index = Math.floor(Math.random() * chambre.length); // choisit un index aléatoire dans le tableau des chambres
@@ -150,20 +151,20 @@ document.getElementById("carteContenu").innerHTML = "<i class='" + effetChoisi.i
     document.getElementById("carteContenu").innerHTML += "<br><button onclick='lancerPileOuFace()'>🪙 Lancer</button><br><span id='pileouface'></span>";
     document.getElementById("tirer").disabled = true;
   }
-  if (effetChoisi.nom === "Mr le président") {
-    document.getElementById("message").innerHTML +=
-      "<input type='text' id='regle'><button id='btnRegle' onclick='validerRegle()'>Validez la règle</button>";
+if (effetChoisi.nom === "Mr le président") {
+    document.getElementById("carteContenu").innerHTML +=
+      "<br><input type='text' id='regle'><button id='btnRegle' onclick='validerRegle()'>Validez la règle</button>";
     document.getElementById("tirer").disabled = true;
-  }
-  if (
+}
+if (
     effetChoisi.nom === "L'Arabe" ||
     effetChoisi.nom === "Le médecin" ||
     effetChoisi.nom === "Fou du roi" ||
     effetChoisi.nom === "Le miroiteur" ||
     effetChoisi.nom === "Le professeur"
   ) {
-    document.getElementById("message").innerHTML +=
-      "<button onclick='jeSuisPret(" +
+    document.getElementById("carteContenu").innerHTML +=
+      "<br><button onclick='jeSuisPret(" +
       effetChoisi.duree +
       ")'>Je suis prêt.</button>";
   }
@@ -194,8 +195,8 @@ function validerRegle() {
     icone: "fa-solid fa-scroll"
   });
   document.getElementById("btnRegle").disabled = true;
-  document.getElementById("message").innerHTML +=
-    "<span style='color:green'>Règle enregistrée !</span>";
+  document.getElementById("carteContenu").innerHTML +=
+    "<br><span style='color:green'>Règle enregistrée !</span>";
   document.getElementById("tirer").disabled = false;
   console.log(pile);
 }
@@ -203,7 +204,7 @@ function validerRegle() {
 function jeSuisPret(duree) {
   let compteur = duree; // on commence à la durée de l'effet
 
-  document.getElementById("message").innerHTML +=
+  document.getElementById("carteContenu").innerHTML +=
     "<br><span id='timer'>" + compteur + "</span> secondes";
 
   let interval = setInterval(function () {
