@@ -335,3 +335,11 @@ function reglerVolume(valeur) {
     sonTir.volume = valeur;
     sonReload.volume = valeur;
 }
+
+document.addEventListener("click", function(event) {
+    let menu = document.getElementById("menu");
+    let btnOptions = document.getElementById("btnOptions");
+    if (!menu.contains(event.target) && event.target !== btnOptions) {
+        menu.style.display = "none";
+    }
+});

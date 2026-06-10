@@ -93,3 +93,7 @@ h1 {
     z-index: 100;
     min-width: 200px;
 }
+#menu button, #menu a {
+    display: block;
+    margin-top: 10px;
+}
