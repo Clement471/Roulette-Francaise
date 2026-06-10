@@ -307,6 +307,7 @@ function revelerStats() {
         document.getElementById("stats").innerHTML += "<br>" + joueurs[i] + " touché " + touches[i];
     }
     document.getElementById("stats").innerHTML += "<br><button onclick='recommencer()'>Rejouer</button>";
+    document.getElementById("stats").innerHTML += "<br><br><a href='https://ko-fi.com/theblacksheep471' target='_blank'><button>Offrez-moi une bière 🍺</button></a>";
 }
 
 function resetTimer() {
