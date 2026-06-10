@@ -13,6 +13,9 @@ let voyantActif = false;
 let nombreTentatives = 0;
 let touches = [];
 let sens = 1;
+let timerInterval
+let compteurTimer = 0;
+let dureeInitiale = 0
 let effet = [
   { nom: "Bombe Nucléaire", description: "Tout le monde boit 3 gorgées.", icone: "fa-solid fa-bomb" },
   { nom: "Fusil à pompe", description: "Le joueur touché boit 4 gorgées.", icone: "fa-solid fa-mars-double" },
@@ -58,6 +61,10 @@ function valider() {
     document.getElementById("erreur").textContent = "Veuillez entrer le nombre de joueurs !";
     return;
   }
+  if (nom < 2 || nom > 6) {
+    document.getElementById("erreur").textContent = "Le nombre de joueurs doit être entre 2 et 6 !";
+    return;
+}
   for (let i = 0; i < nom; i++) {
     document.getElementById("inputs").innerHTML +=
       "<input type='text' id='joueur" + i + "' placeholder='Nom du joueur " + (i + 1) + "'><br>";
@@ -93,6 +100,7 @@ for (let i = 0; i < nom; i++) {
 // ============================================================
 
 function tirer() {
+  clearInterval(timerInterval);
   document.getElementById("message").innerHTML = "";
   document.getElementById("carte").style.display = "none";
   nombreTentatives++;
@@ -126,9 +134,7 @@ function tirerEffet() {
   if (pile.length === 0) {
     document.getElementById("jeu").style.display = "none";
 document.getElementById("fin").style.display = "block";
-for (let i = 0; i < joueurs.length; i++) {
-    document.getElementById("stats").innerHTML += "<br>" + joueurs[i] + " touché " + touches[i] + "</br>";
-}
+document.getElementById("fin").innerHTML = "<h1> Partie terminée !</h1><p>Pariez 3 gorgées sur qui a été le plus touché !</p><button onclick='revelerStats()'>Révéler</button><div id='stats'></div>";
 return true;
   }
   if (voyantActif === true) {
@@ -164,9 +170,7 @@ if (
     effetChoisi.nom === "Le professeur"
   ) {
     document.getElementById("carteContenu").innerHTML +=
-      "<br><button onclick='jeSuisPret(" +
-      effetChoisi.duree +
-      ")'>Je suis prêt.</button>";
+    "<br><button id='btnPret' onclick='jeSuisPret(" + effetChoisi.duree + ")'>Je suis prêt.</button>";
   }
   if (effetChoisi.nom === "Le voyant") {
     voyantActif = true;
@@ -202,17 +206,18 @@ function validerRegle() {
 }
 
 function jeSuisPret(duree) {
-  let compteur = duree; // on commence à la durée de l'effet
+  dureeInitiale = duree
+  document.getElementById("btnPret").disabled = true;
+  compteurTimer = duree; // on commence à la durée de l'effet
 
-  document.getElementById("carteContenu").innerHTML +=
-    "<br><span id='timer'>" + compteur + "</span> secondes";
+ document.getElementById("carteContenu").innerHTML +=
+    "<br><span id='timer'>" + compteurTimer + "</span> secondes<br><button id='btnStop' onclick='resetTimer()'> Reset</button>"
+  timerInterval = setInterval(function () {
+    compteurTimer--; // on enlève 1 chaque seconde
+    document.getElementById("timer").textContent = compteurTimer;
 
-  let interval = setInterval(function () {
-    compteur--; // on enlève 1 chaque seconde
-    document.getElementById("timer").textContent = compteur;
-
-    if (compteur <= 0) {
-      clearInterval(interval); // on arrête le timer
+    if (compteurTimer <= 0) {
+      clearInterval(timerInterval); // on arrête le timer
       document.getElementById("timer").textContent = "TEMPS ÉCOULÉ !";
       document.getElementById("tirer").disabled = false;
     }
@@ -278,4 +283,38 @@ function lancerPileOuFace() {
             document.getElementById("tirer").disabled = false;
         }
     }, 100);
+}
+
+function reinitialiser() {
+    document.getElementById("inputs").innerHTML = "";
+    document.getElementById("btnValider").disabled = false;
+    document.getElementById("startGame").disabled = true;
+    document.getElementById("erreur").textContent = "";
+}
+
+function revelerStats() {
+    for (let i = 0; i < joueurs.length; i++) {
+        document.getElementById("stats").innerHTML += "<br>" + joueurs[i] + " touché " + touches[i];
+    }
+    document.getElementById("stats").innerHTML += "<br><button onclick='recommencer()'>Rejouer</button>";
+}
+
+function resetTimer() {
+  console.log(dureeInitiale);
+    clearInterval(timerInterval);
+    compteurTimer = dureeInitiale;
+    document.getElementById("timer").textContent = compteurTimer;
+    timerInterval = setInterval(function() {
+        if (!document.getElementById("timer")) {
+            clearInterval(timerInterval);
+            return;
+        }
+        compteurTimer--;
+        document.getElementById("timer").textContent = compteurTimer;
+        if (compteurTimer <= 0) {
+            clearInterval(timerInterval);
+            document.getElementById("timer").textContent = "TEMPS ÉCOULÉ !";
+            document.getElementById("tirer").disabled = false;
+        }
+    }, 1000);
 }
