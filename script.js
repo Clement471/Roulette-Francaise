@@ -89,6 +89,7 @@ for (let i = 0; i < nom; i++) {
     joueurs.push(document.getElementById("joueur" + i).value);
     touches.push(0);
 }
+afficherCercle();
 document.getElementById("btnOptions").style.display = "block";
   console.log("Joueurs inscrits : " + joueurs.join(", ")); // affiche les joueurs dans la console (debug)
   document.getElementById("jeu").style.display = "block"; // affiche l'écran de jeu
@@ -136,7 +137,9 @@ sonClic.play();
   document.getElementById("message").innerHTML +=
     "<br>C'est à <strong>" + joueurs[joueurActuel] + "</strong> de tirer !"; // annonce le prochain joueur
     document.getElementById("info").innerHTML = "Chambres : " + chambre.length + "<br>Tentatives :" + nombreTentatives ;
-}
+orienterPistolet ();
+  }
+
 
 function tirerEffet() {
   if (pile.length === 0) {
@@ -343,3 +346,45 @@ document.addEventListener("click", function(event) {
         menu.style.display = "none";
     }
 });
+
+function orienterPistolet() {
+    let taille = 300;
+    let centre = taille / 2;
+    let angle = (joueurActuel / joueurs.length) * 360 - 90;
+    let pistolet = document.getElementById("pistolet");
+    if (pistolet) {
+        pistolet.setAttribute("transform", "translate(" + (centre-20) + "," + (centre-8) + ") rotate(" + angle + " 20 8)");
+    }
+}
+
+function afficherCercle() {
+    let taille = 300;
+    let centre = taille / 2;
+    let rayon = 100;
+    let svg = "<svg width='" + taille + "' height='" + taille + "'>";
+    
+    for (let i = 0; i < joueurs.length; i++) {
+        let angle = (i / joueurs.length) * 2 * Math.PI - Math.PI / 2;
+        let x = centre + rayon * Math.cos(angle);
+        let y = centre + rayon * Math.sin(angle);
+        svg += "<circle cx='" + x + "' cy='" + y + "' r='20' fill='black' stroke='#39ff14' stroke-width='2'/>";
+        svg += "<text x='" + x + "' y='" + (y + 5) + "' text-anchor='middle' fill='#39ff14' font-size='10'>" + joueurs[i] + "</text>";
+    }
+    
+    // pistolet au centre
+    svg += "<g id='pistolet' transform='translate(" + (centre-20) + "," + (centre-8) + ")'>";
+svg += "<rect x='20' y='3' width='60' height='7' rx='2' fill='#39ff14'/>";
+svg += "<rect x='10' y='0' width='25' height='8' rx='1' fill='#39ff14'/>";
+svg += "<circle cx='22' cy='14' r='11' fill='#1a1a1a' stroke='#39ff14' stroke-width='1.5'/>";
+svg += "<circle cx='22' cy='7' r='2' fill='#39ff14'/>";
+svg += "<circle cx='29' cy='10' r='2' fill='#39ff14'/>";
+svg += "<circle cx='29' cy='17' r='2' fill='#39ff14'/>";
+svg += "<circle cx='22' cy='21' r='2' fill='#39ff14'/>";
+svg += "<circle cx='15' cy='17' r='2' fill='#39ff14'/>";
+svg += "<circle cx='15' cy='10' r='2' fill='#39ff14'/>";
+svg += "<g transform='rotate(20, 18, 14)'><rect x='11' y='14' width='11' height='28' rx='3' fill='#39ff14'/></g>";
+svg += "</g>";
+    
+    document.getElementById("cercle").innerHTML = svg;
+    orienterPistolet();
+}
