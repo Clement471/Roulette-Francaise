@@ -16,6 +16,9 @@ let sens = 1;
 let timerInterval
 let compteurTimer = 0;
 let dureeInitiale = 0
+let sonClic = new Audio("sound/clic.wav");
+let sonTir = new Audio("sound/tir.mp3");
+let sonReload = new Audio("sound/reload.wav");
 let effet = [
   { nom: "Bombe Nucléaire", description: "Tout le monde boit 3 gorgées.", icone: "fa-solid fa-bomb" },
   { nom: "Fusil à pompe", description: "Le joueur touché boit 4 gorgées.", icone: "fa-solid fa-mars-double" },
@@ -86,6 +89,7 @@ for (let i = 0; i < nom; i++) {
     joueurs.push(document.getElementById("joueur" + i).value);
     touches.push(0);
 }
+document.getElementById("btnOptions").style.display = "block";
   console.log("Joueurs inscrits : " + joueurs.join(", ")); // affiche les joueurs dans la console (debug)
   document.getElementById("jeu").style.display = "block"; // affiche l'écran de jeu
   document.getElementById("setup").style.display = "none"; // cache l'écran de configuration
@@ -93,6 +97,7 @@ for (let i = 0; i < nom; i++) {
     "Le pistolet est chargé, c'est à <strong>" +
     joueurs[0] +
     "</strong> de tirer !"; // premier message
+    sonReload.play()
 }
 
 // ============================================================
@@ -117,13 +122,16 @@ function tirer() {
     chambre = [1, 2, 3, 4, 5, 6]; // recharge le barillet
     document.getElementById("message").innerHTML =
       "BANG ! <strong>" + joueurs[joueurActuel] + "</strong> est touché ! ";
+sonTir.currentTime = 0;
+sonTir.play();
    if (tirerEffet()) return; // applique un effet spécial aléatoire
   } else {
     // chambre vide — le joueur est sauvé
     document.getElementById("message").innerHTML =
       "Click ! <strong>" + joueurs[joueurActuel] + "</strong> est sauvé.";
+      sonClic.currentTime = 0;
+sonClic.play();
   }
-
   joueurActuel = (joueurActuel + sens + joueurs.length) % joueurs.length; // passe au joueur suivant — revient à 0 après le dernier
   document.getElementById("message").innerHTML +=
     "<br>C'est à <strong>" + joueurs[joueurActuel] + "</strong> de tirer !"; // annonce le prochain joueur
@@ -134,6 +142,7 @@ function tirerEffet() {
   if (pile.length === 0) {
     document.getElementById("jeu").style.display = "none";
 document.getElementById("fin").style.display = "block";
+document.getElementById("btnOptions").style.display = "none";
 document.getElementById("fin").innerHTML = "<h1> Partie terminée !</h1><p>Pariez 3 gorgées sur qui a été le plus touché !</p><button onclick='revelerStats()'>Révéler</button><div id='stats'></div>";
 return true;
   }
@@ -254,6 +263,7 @@ function toggleMenu() {
 function demarrer(){
       document.getElementById("avestissement").style.display = "none";
     document.getElementById("setup").style.display = "block";
+        document.getElementById("btnOptions").style.display = "none";
 }
 
 function lancerDe() {
@@ -317,4 +327,10 @@ function resetTimer() {
             document.getElementById("tirer").disabled = false;
         }
     }, 1000);
+}
+
+function reglerVolume(valeur) {
+    sonClic.volume = valeur;
+    sonTir.volume = valeur;
+    sonReload.volume = valeur;
 }

@@ -36,7 +36,6 @@ h1 {
 }
  
     #recommencer {
-    position: fixed;
     top: 60px;
     left: 10px;
 }
@@ -70,4 +69,27 @@ h1 {
     width: 60px !important;
     height: 60px !important;
     margin-bottom: 10px;
+}
+#volume {
+    display: block;
+    margin-top: 10px;
+}
+
+#menu {
+    position: fixed;
+    top: 60px;
+    left: 10px;
+    text-align: left;
+}
+#menu {
+    position: fixed;
+    top: 50px;
+    left: 10px;
+    background-color: #111;
+    border: 2px solid #39ff14;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: left;
+    z-index: 100;
+    min-width: 200px;
 }
